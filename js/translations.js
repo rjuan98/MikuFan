@@ -1,10 +1,19 @@
+// Carregar o idioma imediatamente antes de qualquer coisa
+const savedLanguage = localStorage.getItem('selectedLanguage') || 'pt-BR';
+document.documentElement.lang = savedLanguage;
+
 const translations = {
     'pt-BR': {
         'welcome': 'Bem-vindo ao mundo mágico da Hatsune Miku!',
-        'nav.home': 'INÍCIO',
+        'nav.home': 'Início',
         'nav.gallery': 'GALERIA',
         'nav.music': 'MÚSICAS',
-        'nav.login': 'ENTRAR',
+        'nav.login': 'LOGIN',
+        'nav.news': 'NOTÍCIAS',
+        'nav.community': 'COMUNIDADE',
+        'nav.downloads': 'DOWNLOADS',
+        'nav.events': 'EVENTOS',
+        'language': 'Idioma',
         'header.title': 'Bem-vindo ao MikuFan',
         'header.subtitle': 'Seu portal definitivo sobre Hatsune Miku',
         'about.title': 'Sobre Hatsune Miku',
@@ -33,14 +42,43 @@ const translations = {
         'footer.contact': 'Contato',
         'footer.social': 'Redes Sociais',
         'footer.terms': 'Termos de Uso',
-        'footer.privacy': 'Política de Privacidade'
+        'footer.privacy': 'Política de Privacidade',
+        'footer.about': 'Sobre o MikuFan',
+        'footer.about_desc': 'Seu destino número um para tudo relacionado à Hatsune Miku! Junte-se à nossa comunidade vibrante de fãs e explore o mundo mágico da diva virtual mais amada do mundo.',
+        'footer.quick_links': 'Links Rápidos',
+        'footer.community': 'Comunidade',
+        'footer.copyright': '© 2025 MikuFan. Todos os direitos reservados.',
+        'footer.powered_by': 'Desenvolvido com',
+        'nav.forum': 'Fórum',
+        'nav.fanart': 'Fan Art',
+        'login.title': 'Login',
+        'login.submit': 'Entrar',
+        'login.no_account': 'Não tem uma conta?',
+        'login.register_link': 'Registre-se',
+        'login.google': 'Entrar com Google',
+        'login.or': 'ou',
+        'register.title': 'Registro',
+        'register.submit': 'Registrar',
+        'register.has_account': 'Já tem uma conta?',
+        'register.login_link': 'Faça login',
+        'register.google': 'Registrar com Google',
+        'error.passwords_dont_match': 'As senhas não coincidem',
+        'error.invalid_email': 'Email inválido',
+        'error.weak_password': 'Senha muito fraca',
+        'error.email_in_use': 'Este email já está em uso',
+        'error.invalid_credentials': 'Email ou senha incorretos'
     },
     'en': {
         'welcome': 'Welcome to the magical world of Hatsune Miku!',
-        'nav.home': 'HOME',
+        'nav.home': 'Home',
         'nav.gallery': 'GALLERY',
         'nav.music': 'MUSIC',
         'nav.login': 'LOGIN',
+        'nav.news': 'NEWS',
+        'nav.community': 'COMMUNITY',
+        'nav.downloads': 'DOWNLOADS',
+        'nav.events': 'EVENTS',
+        'language': 'Language',
         'header.title': 'Welcome to MikuFan',
         'header.subtitle': 'Your ultimate Hatsune Miku portal',
         'about.title': 'About Hatsune Miku',
@@ -69,53 +107,75 @@ const translations = {
         'footer.contact': 'Contact',
         'footer.social': 'Social Media',
         'footer.terms': 'Terms of Use',
-        'footer.privacy': 'Privacy Policy'
+        'footer.privacy': 'Privacy Policy',
+        'footer.about': 'About MikuFan',
+        'footer.about_desc': 'Your number one destination for all things Hatsune Miku! Join our vibrant fan community and explore the magical world of the most beloved virtual diva.',
+        'footer.quick_links': 'Quick Links',
+        'footer.community': 'Community',
+        'footer.copyright': '© 2025 MikuFan. All rights reserved.',
+        'footer.powered_by': 'Powered by',
+        'nav.forum': 'Forum',
+        'nav.fanart': 'Fan Art',
+        'login.title': 'Login',
+        'login.submit': 'Sign In',
+        'login.no_account': "Don't have an account?",
+        'login.register_link': 'Sign Up',
+        'login.google': 'Sign in with Google',
+        'login.or': 'or',
+        'register.title': 'Register',
+        'register.submit': 'Sign Up',
+        'register.has_account': 'Already have an account?',
+        'register.login_link': 'Sign In',
+        'register.google': 'Sign up with Google',
+        'error.passwords_dont_match': 'Passwords do not match',
+        'error.invalid_email': 'Invalid email',
+        'error.weak_password': 'Password is too weak',
+        'error.email_in_use': 'This email is already in use',
+        'error.invalid_credentials': 'Invalid email or password'
     }
 };
 
-// Variável para armazenar o idioma atual
-let currentLanguage = 'pt-BR';
-
-// Função para mudar o idioma
-function changeLanguage(lang) {
-    currentLanguage = lang;
-    translatePage();
-    updateActiveButton();
-    
-    // Salvar preferência do usuário
-    localStorage.setItem('preferredLanguage', lang);
-
-    // Fechar o dropdown após a mudança de idioma
-    const langDropdown = document.querySelector('.lang-dropdown');
-    if (langDropdown) {
-        langDropdown.classList.remove('show');
-    }
-}
-
 // Função para traduzir a página
-function translatePage() {
+function translatePage(language) {
+    // Validar se o idioma existe
+    if (!translations[language]) {
+        language = 'pt-BR'; // Fallback para português se o idioma não existir
+    }
+
+    // Traduzir todos os elementos com data-translate
     const elements = document.querySelectorAll('[data-translate]');
-    
     elements.forEach(element => {
         const key = element.getAttribute('data-translate');
-        if (translations[currentLanguage] && translations[currentLanguage][key]) {
-            element.textContent = translations[currentLanguage][key];
+        if (translations[language] && translations[language][key]) {
+            if (element.classList.contains('nav-link')) {
+                // Para links de navegação, atualizar apenas o texto dentro do span
+                const span = element.querySelector('.nav-text');
+                if (span) {
+                    span.textContent = translations[language][key];
+                }
+            } else {
+                element.textContent = translations[language][key];
+            }
         }
     });
+
+    // Atualizar o idioma do documento
+    document.documentElement.lang = language;
+
+    // Salvar o idioma escolhido
+    localStorage.setItem('selectedLanguage', language);
 
     // Atualizar o texto do botão de idioma
     const currentLangSpan = document.querySelector('.current-lang');
     if (currentLangSpan) {
-        currentLangSpan.textContent = currentLanguage === 'pt-BR' ? 'PT' : 'EN';
+        currentLangSpan.textContent = language === 'pt-BR' ? 'PT' : 'EN';
     }
-}
 
-// Função para atualizar o botão ativo
-function updateActiveButton() {
+    // Atualizar a classe ativa nas opções de idioma
     const langOptions = document.querySelectorAll('.lang-option');
     langOptions.forEach(option => {
-        const langCode = option.getAttribute('onclick').match(/'([^']+)'/)[1];
-        if (langCode === currentLanguage) {
+        const langCode = option.getAttribute('data-lang');
+        if (langCode === language) {
             option.classList.add('active');
         } else {
             option.classList.remove('active');
@@ -123,34 +183,62 @@ function updateActiveButton() {
     });
 }
 
-// Inicialização
-document.addEventListener('DOMContentLoaded', () => {
-    // Verificar se há uma preferência salva
-    const savedLanguage = localStorage.getItem('preferredLanguage');
-    if (savedLanguage) {
-        currentLanguage = savedLanguage;
+// Função para obter o idioma atual
+function getCurrentLanguage() {
+    return localStorage.getItem('selectedLanguage') || 'pt-BR';
+}
+
+// Função para fechar o dropdown
+function closeLanguageDropdown() {
+    const dropdown = document.querySelector('.lang-dropdown');
+    if (dropdown) {
+        dropdown.classList.remove('show');
     }
-    
+}
+
+// Função para alternar o dropdown
+function toggleLanguageDropdown(event) {
+    if (event) {
+        event.stopPropagation();
+    }
+    const dropdown = document.querySelector('.lang-dropdown');
+    if (dropdown) {
+        dropdown.classList.toggle('show');
+    }
+}
+
+// Traduzir a página imediatamente ao carregar o script
+translatePage(savedLanguage);
+
+// Inicializar a tradução quando o DOM estiver pronto
+document.addEventListener('DOMContentLoaded', () => {
     // Configurar o dropdown de idiomas
     const langBtn = document.querySelector('.lang-btn');
-    const langDropdown = document.querySelector('.lang-dropdown');
-    const langSwitcher = document.querySelector('.lang-switcher');
-
-    if (langBtn && langDropdown) {
-        // Toggle do dropdown ao clicar no botão
-        langBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            langDropdown.classList.toggle('show');
-        });
-
-        // Fechar dropdown ao clicar fora
-        document.addEventListener('click', (e) => {
-            if (!langSwitcher.contains(e.target)) {
-                langDropdown.classList.remove('show');
-            }
-        });
+    if (langBtn) {
+        langBtn.addEventListener('click', toggleLanguageDropdown);
     }
-    
-    translatePage();
-    updateActiveButton();
-}); 
+
+    // Fechar dropdown ao clicar fora
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.lang-switcher')) {
+            closeLanguageDropdown();
+        }
+    });
+
+    // Adicionar listeners para as opções de idioma
+    const langOptions = document.querySelectorAll('.lang-option');
+    langOptions.forEach(option => {
+        option.addEventListener('click', (e) => {
+            e.preventDefault();
+            const newLanguage = option.getAttribute('data-lang');
+            translatePage(newLanguage);
+            closeLanguageDropdown(); // Fecha o dropdown após selecionar
+        });
+    });
+});
+
+// Expor funções necessárias globalmente
+window.translatePage = translatePage;
+window.getCurrentLanguage = getCurrentLanguage;
+window.toggleLanguageDropdown = toggleLanguageDropdown;
+window.closeLanguageDropdown = closeLanguageDropdown; 

@@ -35,7 +35,7 @@
 @keyframes patternFloat {
     0% {
         background-position: 50px 50px, 30px 30px, 20px 20px, 20px 20px;
-    }
+}
     100% {
         background-position: 170px 170px, 150px 150px, 80px 80px, 80px 80px;
     }
@@ -100,7 +100,7 @@
     100% {
         transform: translateX(200%) translateY(-100px) rotate(360deg);
         opacity: 0;
-    }
+}
 }
 
 /* Linhas de código decorativas */
@@ -123,10 +123,10 @@
 @keyframes gridFloat {
     0% {
         background-position: 0 0;
-    }
+}
     100% {
         background-position: 60px 60px;
-    }
+}
 }
 
 /* Círculos decorativos */
@@ -163,7 +163,7 @@
     50% {
         transform: scale(1.3);
         opacity: 0.9;
-    }
+}
 }
 
 /* Linhas de bits */
@@ -515,7 +515,7 @@
         flex-direction: column;
         margin-left: 60px;
         margin-bottom: 3rem;
-    }
+}
 
     .timeline-item::after {
         left: 30px;
@@ -523,7 +523,7 @@
 
     .timeline-item:nth-child(odd) {
         flex-direction: column;
-    }
+}
 
     .timeline-date {
         margin-bottom: 1.5rem;
@@ -550,7 +550,7 @@
     .history-quote::before,
     .history-quote::after {
         font-size: 5rem;
-    }
+}
 
     .history-quote::before {
         top: 0.5rem;
@@ -565,7 +565,7 @@
     .about-stats {
         flex-direction: column;
         gap: 2rem;
-    }
+}
 
     .stat-item {
         width: 100%;

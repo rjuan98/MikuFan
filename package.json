@@ -1,0 +1,25 @@
+{
+  "name": "mikufan",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "http-server -p 8080 --cors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rjuan98/MikuFan.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rjuan98/MikuFan/issues"
+  },
+  "homepage": "https://github.com/rjuan98/MikuFan#readme",
+  "description": "",
+  "dependencies": {
+    "firebase": "^11.10.0",
+    "http-server": "^14.1.1"
+  }
+}

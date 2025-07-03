@@ -14,36 +14,16 @@
     <!-- Botões de Login e Idioma -->
     <div class="top-buttons">
         <div class="lang-switcher">
-            <button class="lang-btn" aria-label="Switch Language">
-                <svg class="lang-icon" viewBox="0 0 24 24" width="24" height="24">
-                    <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
-                </svg>
-                <span class="current-lang">EN</span>
+            <button class="lang-btn">
+                <span class="current-lang">PT</span>
             </button>
             <div class="lang-dropdown">
-                <button onclick="changeLanguage('en')" class="lang-option">
-                    <div class="flag-icon">
-                        <svg viewBox="0 0 640 480">
-                            <path fill="#012169" d="M0 0h640v480H0z"/>
-                            <path fill="#FFF" d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0h75z"/>
-                            <path fill="#C8102E" d="m424 281 216 159v40L369 281h55zm-184 20 6 35L54 480H0l240-179zM640 0v3L391 191l2-44L590 0h50zM0 0l239 176h-60L0 42V0z"/>
-                            <path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
-                            <path fill="#C8102E" d="M0 193v96h640v-96H0zM273 0v480h96V0h-96z"/>
-                        </svg>
-                    </div>
-                    <span>English</span>
-                </button>
-                <button onclick="changeLanguage('pt-BR')" class="lang-option">
-                    <div class="flag-icon">
-                        <svg viewBox="0 0 640 480">
-                            <path fill="#009b3a" d="M0 0h640v480H0z"/>
-                            <path fill="#fedf00" d="m321 436-301-181 301-181 301 181-301 181z"/>
-                            <circle fill="#002776" cx="321" cy="255" r="114"/>
-                            <path fill="#fff" d="m321 219 89 161H233l88-161z"/>
-                        </svg>
-                    </div>
-                    <span>Português</span>
-                </button>
+                <a href="#" class="lang-option" data-lang="pt-BR">
+                    Português
+                </a>
+                <a href="#" class="lang-option" data-lang="en">
+                    English
+                </a>
             </div>
         </div>
         <button class="login-btn" id="spotify-login">
@@ -169,138 +149,6 @@
     </main>
 
     <script src="js/translations.js"></script>
-    <script>
-        // Spotify Web Playback SDK
-        window.onSpotifyWebPlaybackSDKReady = () => {
-            const token = 'YOUR_SPOTIFY_TOKEN';
-            const player = new Spotify.Player({
-                name: 'MikuFan Web Player',
-                getOAuthToken: cb => { cb(token); }
-            });
-
-            // Error handling
-            player.addListener('initialization_error', ({ message }) => { console.error(message); });
-            player.addListener('authentication_error', ({ message }) => { console.error(message); });
-            player.addListener('account_error', ({ message }) => { console.error(message); });
-            player.addListener('playback_error', ({ message }) => { console.error(message); });
-
-            // Playback status updates
-            player.addListener('player_state_changed', state => {
-                if (state) {
-                    updatePlayPauseButton(state.paused);
-                    updateProgress(state.position, state.duration);
-                    updateLyrics(state.track_window.current_track);
-                }
-            });
-
-            // Ready
-            player.addListener('ready', ({ device_id }) => {
-                console.log('Ready with Device ID', device_id);
-                // Connect to Spotify here
-            });
-
-            // Connect to the player
-            player.connect();
-
-            // Custom controls
-            document.getElementById('play-pause').onclick = function() {
-                player.togglePlay();
-            };
-
-            document.getElementById('prev-track').onclick = function() {
-                player.previousTrack();
-            };
-
-            document.getElementById('next-track').onclick = function() {
-                player.nextTrack();
-            };
-        };
-
-        // Helper functions
-        function updatePlayPauseButton(isPaused) {
-            const button = document.getElementById('play-pause');
-            button.innerHTML = isPaused ? 
-                '<svg viewBox="0 0 24 24" width="24" height="24"><path d="M8 5v14l11-7z"/></svg>' :
-                '<svg viewBox="0 0 24 24" width="24" height="24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
-        }
-
-        function updateProgress(position, duration) {
-            const progress = document.querySelector('.progress');
-            const currentTime = document.getElementById('current-time');
-            const durationEl = document.getElementById('duration');
-            
-            const percentage = (position / duration) * 100;
-            progress.style.width = percentage + '%';
-            
-            currentTime.textContent = formatTime(position);
-            durationEl.textContent = formatTime(duration);
-        }
-
-        function formatTime(ms) {
-            const minutes = Math.floor(ms / 60000);
-            const seconds = ((ms % 60000) / 1000).toFixed(0);
-            return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-        }
-
-        function updateLyrics(track) {
-            // This would need to be connected to a lyrics API
-            // For now, we'll just show a placeholder
-            const lyricsText = document.querySelector('.lyrics-text');
-            lyricsText.textContent = `Lyrics for: ${track.name}`;
-        }
-
-        // Language switcher code (same as index.html)
-        document.addEventListener('DOMContentLoaded', () => {
-            const langSwitcher = document.querySelector('.lang-switcher');
-            const langBtn = document.querySelector('.lang-btn');
-            const currentLang = document.querySelector('.current-lang');
-            const langOptions = document.querySelectorAll('.lang-option');
-
-            function updateTexts(lang) {
-                document.documentElement.lang = lang;
-                currentLang.textContent = lang.toUpperCase();
-
-                document.querySelectorAll('[data-translate]').forEach(element => {
-                    const keys = element.dataset.translate.split('.');
-                    let translation = translations[lang];
-                    
-                    for (const key of keys) {
-                        translation = translation[key];
-                    }
-
-                    if (element.classList.contains('nav-link')) {
-                        element.querySelector('.nav-text').textContent = translation;
-                    } else {
-                        element.textContent = translation;
-                    }
-                });
-
-                localStorage.setItem('preferredLanguage', lang);
-            }
-
-            langBtn.addEventListener('click', () => {
-                langSwitcher.classList.toggle('active');
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!langSwitcher.contains(e.target)) {
-                    langSwitcher.classList.remove('active');
-                }
-            });
-
-            langOptions.forEach(option => {
-                option.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const lang = option.dataset.lang;
-                    updateTexts(lang);
-                    langSwitcher.classList.remove('active');
-                });
-            });
-
-            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
-            updateTexts(savedLang);
-        });
-    </script>
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
 </body>
 </html> 
