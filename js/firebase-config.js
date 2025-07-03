@@ -2,21 +2,22 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
 
-// Your web app's Firebase configuration
+// Firebase configuration - carregando do arquivo .env
 const firebaseConfig = {
-    apiKey: "AIzaSyBctUTP9BJwa59FvQZWTeGc6I7Z8ThuQtQ",
-    authDomain: "mikufan-57f29.firebaseapp.com",
-    databaseURL: "https://mikufan-57f29-default-rtdb.firebaseio.com",
-    projectId: "mikufan-57f29",
-    storageBucket: "mikufan-57f29.firebasestorage.app",
-    messagingSenderId: "784213993527",
-    appId: "1:784213993527:web:b6e48a0710ccdef0e4b7b2"
+    apiKey: import.meta.env.FIREBASE_API_KEY,
+    authDomain: import.meta.env.FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.FIREBASE_APP_ID
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
+const provider = new GoogleAuthProvider();
+
+export { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, provider, signInWithPopup };
 
 export async function signIn(email, password) {
     try {
@@ -48,7 +49,7 @@ export async function signUp(email, password) {
 
 export async function signInWithGoogle() {
     try {
-        const result = await signInWithPopup(auth, googleProvider);
+        const result = await signInWithPopup(auth, provider);
         if (result.user) {
             window.location.href = 'index.html';
         }
