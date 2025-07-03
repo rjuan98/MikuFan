@@ -1,0 +1,7 @@
+// Este arquivo será gerado automaticamente pelo Vercel com as variáveis de ambiente
+window.FIREBASE_API_KEY = '%%FIREBASE_API_KEY%%';
+window.FIREBASE_AUTH_DOMAIN = '%%FIREBASE_AUTH_DOMAIN%%';
+window.FIREBASE_PROJECT_ID = '%%FIREBASE_PROJECT_ID%%';
+window.FIREBASE_STORAGE_BUCKET = '%%FIREBASE_STORAGE_BUCKET%%';
+window.FIREBASE_MESSAGING_SENDER_ID = '%%FIREBASE_MESSAGING_SENDER_ID%%';
+window.FIREBASE_APP_ID = '%%FIREBASE_APP_ID%%'; 

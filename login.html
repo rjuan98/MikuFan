@@ -12,6 +12,11 @@
     <script src="js/translations.js" defer></script>
 </head>
 <body>
+    <!-- Carrega as variáveis de ambiente primeiro -->
+    <script src="js/env-config.js"></script>
+    <!-- Depois carrega a configuração do Firebase -->
+    <script type="module" src="js/firebase-config.js"></script>
+
     <div class="login-container">
         <a href="index.html" class="back-button">
             <svg viewBox="0 0 24 24">

@@ -2,14 +2,14 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
 
-// Firebase configuration - carregando do arquivo .env
+// Firebase configuration
 const firebaseConfig = {
-    apiKey: import.meta.env.FIREBASE_API_KEY,
-    authDomain: import.meta.env.FIREBASE_AUTH_DOMAIN,
-    projectId: import.meta.env.FIREBASE_PROJECT_ID,
-    storageBucket: import.meta.env.FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.FIREBASE_MESSAGING_SENDER_ID,
-    appId: import.meta.env.FIREBASE_APP_ID
+    apiKey: window.FIREBASE_API_KEY || '',
+    authDomain: window.FIREBASE_AUTH_DOMAIN || '',
+    projectId: window.FIREBASE_PROJECT_ID || '',
+    storageBucket: window.FIREBASE_STORAGE_BUCKET || '',
+    messagingSenderId: window.FIREBASE_MESSAGING_SENDER_ID || '',
+    appId: window.FIREBASE_APP_ID || ''
 };
 
 // Initialize Firebase
