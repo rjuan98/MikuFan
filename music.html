@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MikuFan - Music</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/music.css">
+</head>
+<body class="music-page">
+    <!-- Botões de Login e Idioma -->
+    <div class="top-buttons">
+        <div class="lang-switcher">
+            <button class="lang-btn" aria-label="Switch Language">
+                <svg class="lang-icon" viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+                </svg>
+                <span class="current-lang">EN</span>
+            </button>
+            <div class="lang-dropdown">
+                <a href="#" class="lang-option" data-lang="en">English</a>
+                <a href="#" class="lang-option" data-lang="pt-BR">Português</a>
+            </div>
+        </div>
+        <button class="login-btn" id="spotify-login">
+            <svg class="login-icon" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+            <span data-translate="login">Login with Spotify</span>
+        </button>
+    </div>
+
+    <aside class="sidebar">
+        <nav>
+            <ul>
+                <li>
+                    <a href="index.html" class="nav-link" data-translate="nav.home">
+                        <svg class="nav-icon" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                        </svg>
+                        <span class="nav-text">HOME</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="gallery.html" class="nav-link" data-translate="nav.gallery">
+                        <svg class="nav-icon" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.53 3.1-3.99c.2-.26.6-.26.8.01l3.51 4.68c.25.33.01.8-.4.8H6.02c-.42 0-.65-.48-.39-.81L8.12 14c.19-.26.57-.27.78-.02z"/>
+                        </svg>
+                        <span class="nav-text">GALLERY</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link active" data-translate="nav.musics">
+                        <svg class="nav-icon" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6zm-2 16c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+                        </svg>
+                        <span class="nav-text">MUSICS</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="music-header">
+            <h1 class="title-animated" data-translate="music.title">
+                <span class="text-gradient">Miku</span>
+                <span class="text-pop">Music</span>
+            </h1>
+        </div>
+
+        <div class="music-container">
+            <!-- Player Container -->
+            <div class="player-container">
+                <div id="spotify-player"></div>
+                <div class="custom-controls">
+                    <button id="prev-track" class="control-btn">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+                        </svg>
+                    </button>
+                    <button id="play-pause" class="control-btn">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                    <button id="next-track" class="control-btn">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+                        </svg>
+                    </button>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress"></div>
+                        </div>
+                        <div class="time-info">
+                            <span id="current-time">0:00</span>
+                            <span id="duration">0:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Playlists Section -->
+            <div class="playlists-section">
+                <h2 data-translate="music.playlists">Featured Playlists</h2>
+                <div class="playlist-grid">
+                    <div class="playlist-card" data-playlist-id="37i9dQZF1DX7rOY2tZUw1k">
+                        <div class="playlist-image">
+                            <img src="assets/playlists/miku-essentials.jpg" alt="Hatsune Miku Essentials">
+                        </div>
+                        <h3>Hatsune Miku Essentials</h3>
+                        <p>The best of Miku's songs</p>
+                    </div>
+                    <div class="playlist-card" data-playlist-id="37i9dQZF1DX4xBm0SHj9HY">
+                        <div class="playlist-image">
+                            <img src="assets/playlists/kikuo-hits.jpg" alt="Kikuo's Best Hits">
+                        </div>
+                        <h3>Kikuo's Best Hits</h3>
+                        <p>Top tracks from Kikuo</p>
+                    </div>
+                    <div class="playlist-card" data-playlist-id="37i9dQZF1DX2pSTOxoPbx9">
+                        <div class="playlist-image">
+                            <img src="assets/playlists/vocaloid-classics.jpg" alt="Vocaloid Classics">
+                        </div>
+                        <h3>Vocaloid Classics</h3>
+                        <p>Timeless Vocaloid songs</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lyrics Section -->
+            <div class="lyrics-container">
+                <h2 data-translate="music.lyrics">Lyrics</h2>
+                <div class="lyrics-tabs">
+                    <button class="tab-btn active" data-lang="jp">日本語</button>
+                    <button class="tab-btn" data-lang="en">English</button>
+                    <button class="tab-btn" data-lang="pt">Português</button>
+                </div>
+                <div class="lyrics-content">
+                    <div class="lyrics-text"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/translations.js"></script>
+    <script>
+        // Spotify Web Playback SDK
+        window.onSpotifyWebPlaybackSDKReady = () => {
+            const token = 'YOUR_SPOTIFY_TOKEN';
+            const player = new Spotify.Player({
+                name: 'MikuFan Web Player',
+                getOAuthToken: cb => { cb(token); }
+            });
+
+            // Error handling
+            player.addListener('initialization_error', ({ message }) => { console.error(message); });
+            player.addListener('authentication_error', ({ message }) => { console.error(message); });
+            player.addListener('account_error', ({ message }) => { console.error(message); });
+            player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+            // Playback status updates
+            player.addListener('player_state_changed', state => {
+                if (state) {
+                    updatePlayPauseButton(state.paused);
+                    updateProgress(state.position, state.duration);
+                    updateLyrics(state.track_window.current_track);
+                }
+            });
+
+            // Ready
+            player.addListener('ready', ({ device_id }) => {
+                console.log('Ready with Device ID', device_id);
+                // Connect to Spotify here
+            });
+
+            // Connect to the player
+            player.connect();
+
+            // Custom controls
+            document.getElementById('play-pause').onclick = function() {
+                player.togglePlay();
+            };
+
+            document.getElementById('prev-track').onclick = function() {
+                player.previousTrack();
+            };
+
+            document.getElementById('next-track').onclick = function() {
+                player.nextTrack();
+            };
+        };
+
+        // Helper functions
+        function updatePlayPauseButton(isPaused) {
+            const button = document.getElementById('play-pause');
+            button.innerHTML = isPaused ? 
+                '<svg viewBox="0 0 24 24" width="24" height="24"><path d="M8 5v14l11-7z"/></svg>' :
+                '<svg viewBox="0 0 24 24" width="24" height="24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+        }
+
+        function updateProgress(position, duration) {
+            const progress = document.querySelector('.progress');
+            const currentTime = document.getElementById('current-time');
+            const durationEl = document.getElementById('duration');
+            
+            const percentage = (position / duration) * 100;
+            progress.style.width = percentage + '%';
+            
+            currentTime.textContent = formatTime(position);
+            durationEl.textContent = formatTime(duration);
+        }
+
+        function formatTime(ms) {
+            const minutes = Math.floor(ms / 60000);
+            const seconds = ((ms % 60000) / 1000).toFixed(0);
+            return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+        }
+
+        function updateLyrics(track) {
+            // This would need to be connected to a lyrics API
+            // For now, we'll just show a placeholder
+            const lyricsText = document.querySelector('.lyrics-text');
+            lyricsText.textContent = `Lyrics for: ${track.name}`;
+        }
+
+        // Language switcher code (same as index.html)
+        document.addEventListener('DOMContentLoaded', () => {
+            const langSwitcher = document.querySelector('.lang-switcher');
+            const langBtn = document.querySelector('.lang-btn');
+            const currentLang = document.querySelector('.current-lang');
+            const langOptions = document.querySelectorAll('.lang-option');
+
+            function updateTexts(lang) {
+                document.documentElement.lang = lang;
+                currentLang.textContent = lang.toUpperCase();
+
+                document.querySelectorAll('[data-translate]').forEach(element => {
+                    const keys = element.dataset.translate.split('.');
+                    let translation = translations[lang];
+                    
+                    for (const key of keys) {
+                        translation = translation[key];
+                    }
+
+                    if (element.classList.contains('nav-link')) {
+                        element.querySelector('.nav-text').textContent = translation;
+                    } else {
+                        element.textContent = translation;
+                    }
+                });
+
+                localStorage.setItem('preferredLanguage', lang);
+            }
+
+            langBtn.addEventListener('click', () => {
+                langSwitcher.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!langSwitcher.contains(e.target)) {
+                    langSwitcher.classList.remove('active');
+                }
+            });
+
+            langOptions.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const lang = option.dataset.lang;
+                    updateTexts(lang);
+                    langSwitcher.classList.remove('active');
+                });
+            });
+
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            updateTexts(savedLang);
+        });
+    </script>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+</body>
+</html> 
