@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <title>MikuFan - Music</title>
@@ -21,8 +21,29 @@
                 <span class="current-lang">EN</span>
             </button>
             <div class="lang-dropdown">
-                <a href="#" class="lang-option" data-lang="en">English</a>
-                <a href="#" class="lang-option" data-lang="pt-BR">Português</a>
+                <button onclick="changeLanguage('en')" class="lang-option">
+                    <div class="flag-icon">
+                        <svg viewBox="0 0 640 480">
+                            <path fill="#012169" d="M0 0h640v480H0z"/>
+                            <path fill="#FFF" d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0h75z"/>
+                            <path fill="#C8102E" d="m424 281 216 159v40L369 281h55zm-184 20 6 35L54 480H0l240-179zM640 0v3L391 191l2-44L590 0h50zM0 0l239 176h-60L0 42V0z"/>
+                            <path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+                            <path fill="#C8102E" d="M0 193v96h640v-96H0zM273 0v480h96V0h-96z"/>
+                        </svg>
+                    </div>
+                    <span>English</span>
+                </button>
+                <button onclick="changeLanguage('pt-BR')" class="lang-option">
+                    <div class="flag-icon">
+                        <svg viewBox="0 0 640 480">
+                            <path fill="#009b3a" d="M0 0h640v480H0z"/>
+                            <path fill="#fedf00" d="m321 436-301-181 301-181 301 181-301 181z"/>
+                            <circle fill="#002776" cx="321" cy="255" r="114"/>
+                            <path fill="#fff" d="m321 219 89 161H233l88-161z"/>
+                        </svg>
+                    </div>
+                    <span>Português</span>
+                </button>
             </div>
         </div>
         <button class="login-btn" id="spotify-login">
@@ -53,11 +74,11 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link active" data-translate="nav.musics">
+                    <a href="#" class="nav-link active">
                         <svg class="nav-icon" viewBox="0 0 24 24" width="24" height="24">
                             <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6zm-2 16c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
                         </svg>
-                        <span class="nav-text">MUSICS</span>
+                        <span class="nav-text" data-translate="nav.music">MUSIC</span>
                     </a>
                 </li>
             </ul>

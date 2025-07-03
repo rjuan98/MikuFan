@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <title>MikuFan - Gallery</title>
@@ -21,8 +21,29 @@
                 <span class="current-lang">EN</span>
             </button>
             <div class="lang-dropdown">
-                <a href="#" class="lang-option" data-lang="en">English</a>
-                <a href="#" class="lang-option" data-lang="pt-BR">Português</a>
+                <button onclick="changeLanguage('en')" class="lang-option">
+                    <div class="flag-icon">
+                        <svg viewBox="0 0 640 480">
+                            <path fill="#012169" d="M0 0h640v480H0z"/>
+                            <path fill="#FFF" d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0h75z"/>
+                            <path fill="#C8102E" d="m424 281 216 159v40L369 281h55zm-184 20 6 35L54 480H0l240-179zM640 0v3L391 191l2-44L590 0h50zM0 0l239 176h-60L0 42V0z"/>
+                            <path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+                            <path fill="#C8102E" d="M0 193v96h640v-96H0zM273 0v480h96V0h-96z"/>
+                        </svg>
+                    </div>
+                    <span>English</span>
+                </button>
+                <button onclick="changeLanguage('pt-BR')" class="lang-option">
+                    <div class="flag-icon">
+                        <svg viewBox="0 0 640 480">
+                            <path fill="#009b3a" d="M0 0h640v480H0z"/>
+                            <path fill="#fedf00" d="m321 436-301-181 301-181 301 181-301 181z"/>
+                            <circle fill="#002776" cx="321" cy="255" r="114"/>
+                            <path fill="#fff" d="m321 219 89 161H233l88-161z"/>
+                        </svg>
+                    </div>
+                    <span>Português</span>
+                </button>
             </div>
         </div>
         <button class="login-btn">
@@ -53,11 +74,11 @@
                     </a>
                 </li>
                 <li>
-                    <a href="music.html" class="nav-link" data-translate="nav.musics">
+                    <a href="music.html" class="nav-link">
                         <svg class="nav-icon" viewBox="0 0 24 24" width="24" height="24">
                             <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6zm-2 16c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
                         </svg>
-                        <span class="nav-text">MUSICS</span>
+                        <span class="nav-text" data-translate="nav.music">MUSIC</span>
                     </a>
                 </li>
             </ul>
@@ -158,143 +179,6 @@
     </main>
 
     <script src="js/translations.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Código do seletor de idioma (mesmo do index.html)
-            const langSwitcher = document.querySelector('.lang-switcher');
-            const langBtn = document.querySelector('.lang-btn');
-            const currentLang = document.querySelector('.current-lang');
-            const langOptions = document.querySelectorAll('.lang-option');
-
-            function updateTexts(lang) {
-                document.documentElement.lang = lang;
-                currentLang.textContent = lang.toUpperCase();
-
-                document.querySelectorAll('[data-translate]').forEach(element => {
-                    const keys = element.dataset.translate.split('.');
-                    let translation = translations[lang];
-                    
-                    for (const key of keys) {
-                        translation = translation[key];
-                    }
-
-                    if (element.classList.contains('nav-link')) {
-                        element.querySelector('.nav-text').textContent = translation;
-                    } else {
-                        element.textContent = translation;
-                    }
-                });
-
-                localStorage.setItem('preferredLanguage', lang);
-            }
-
-            // Filtros da galeria
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const galleryItems = document.querySelectorAll('.gallery-item');
-
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const filter = button.dataset.filter;
-                    
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-
-                    galleryItems.forEach(item => {
-                        if (filter === 'all' || item.classList.contains(filter)) {
-                            item.style.display = 'block';
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    });
-                });
-            });
-
-            // Modal da galeria
-            const modal = document.querySelector('.gallery-modal');
-            const modalImg = modal.querySelector('img');
-            const modalTitle = modal.querySelector('h3');
-            const modalArtist = modal.querySelector('.artist');
-            const modalDesc = modal.querySelector('.description');
-            const closeBtn = modal.querySelector('.modal-close');
-            let currentIndex = 0;
-
-            galleryItems.forEach((item, index) => {
-                item.addEventListener('click', () => {
-                    currentIndex = index;
-                    const img = item.querySelector('img');
-                    const title = item.querySelector('h3').textContent;
-                    const artist = item.querySelector('p').textContent;
-
-                    modalImg.src = img.src;
-                    modalTitle.textContent = title;
-                    modalArtist.textContent = artist;
-                    modal.classList.add('active');
-                });
-            });
-
-            closeBtn.addEventListener('click', () => {
-                modal.classList.remove('active');
-            });
-
-            // Navegação do modal
-            const prevBtn = modal.querySelector('.modal-prev');
-            const nextBtn = modal.querySelector('.modal-next');
-
-            prevBtn.addEventListener('click', () => {
-                currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
-                updateModal();
-            });
-
-            nextBtn.addEventListener('click', () => {
-                currentIndex = (currentIndex + 1) % galleryItems.length;
-                updateModal();
-            });
-
-            function updateModal() {
-                const item = galleryItems[currentIndex];
-                const img = item.querySelector('img');
-                const title = item.querySelector('h3').textContent;
-                const artist = item.querySelector('p').textContent;
-
-                modalImg.src = img.src;
-                modalTitle.textContent = title;
-                modalArtist.textContent = artist;
-            }
-
-            // Botões de like
-            const likeButtons = document.querySelectorAll('.like-btn');
-
-            likeButtons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    button.classList.toggle('active');
-                });
-            });
-
-            // Inicialização do idioma
-            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
-            updateTexts(savedLang);
-
-            // Toggle do dropdown de idioma
-            langBtn.addEventListener('click', () => {
-                langSwitcher.classList.toggle('active');
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!langSwitcher.contains(e.target)) {
-                    langSwitcher.classList.remove('active');
-                }
-            });
-
-            langOptions.forEach(option => {
-                option.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const lang = option.dataset.lang;
-                    updateTexts(lang);
-                    langSwitcher.classList.remove('active');
-                });
-            });
-        });
-    </script>
+    <script src="js/gallery.js"></script>
 </body>
 </html> 
